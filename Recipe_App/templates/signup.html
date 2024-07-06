@@ -1,0 +1,42 @@
+{% extends 'base.html' %}{% load static %}{%block title%} Signup
+{%endblock%}{%block content%}
+
+<h1 class="text-center">Signup</h1>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <table class="table">
+    <tr>
+      <th>{{form.first_name.label_tag}}</th>
+      <td>{{form.first_name}}</td>
+    </tr>
+    <tr>
+      <th>{{form.last_name.label_tag}}</th>
+      <td>{{form.last_name}}</td>
+    </tr>
+    <tr>
+      <th>{{form.username.label_tag}}</th>
+      <td>{{form.username}}</td>
+    </tr>
+    <tr>
+      <th>{{form.email.label_tag}}</th>
+      <td>{{form.email}}</td>
+    </tr>
+    <tr>
+      <th>{{form.password1.label_tag}}</th>
+      <td>{{form.password1}}</td>
+    </tr>
+    <tr>
+      <th>{{form.password2.label_tag}}</th>
+      <td>{{form.password2}}</td>
+    </tr>
+  </table>
+
+  <div class="button m-3">
+    <input class="btn btn-warning" type="submit" value="Signup" />
+  </div>
+
+  <p class="m-3">Already have a account? <a href="login">Login</a></p>
+</form>
+
+{%endblock%}

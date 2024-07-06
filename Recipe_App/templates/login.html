@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% load static %}{%block title%} Login
+{%endblock%}{%block content%}
+
+<form action="" method="post">
+  {% csrf_token %}
+  <table class="table">
+    {{form.as_table}}
+  </table>
+  <div class="button m-3">
+    <input class="btn btn-warning" type="submit" value="Login" />
+  </div>
+
+  <p class="m-3">Don't have a account? <a href="signup">Signup</a></p>
+</form>
+
+{%endblock%}

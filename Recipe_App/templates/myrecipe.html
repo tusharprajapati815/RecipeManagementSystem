@@ -1,0 +1,55 @@
+{% extends 'base.html' %}{% load static %}{%block title%} MyRecipe
+{%endblock%}{%block content%}
+
+<div class="container">
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
+      {% if recipelist %} {% for r in recipelist %}
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <div class="card-img-container">
+            {% if r.recipe_img.url %}
+            <img
+              class="card-img-top"
+              src="{{ r.recipe_img.url }}"
+              alt="Thumbnail"
+              style="object-fit: cover; height: 225px"
+            />
+            {% else %}
+            <div class="placeholder-img">Thumbnail</div>
+            {% endif %}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ r.recipe_name }}</h5>
+            <p class="card-text">{{ r.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a
+                  href="/viewpage/{{ r.id }}"
+                  class="btn btn-sm btn-outline-secondary"
+                  >View</a
+                >
+                <a
+                  href="/editpage/{{ r.id }}"
+                  class="btn btn-sm btn-outline-secondary"
+                  >Edit</a
+                >
+              </div>
+              <small class="text-body-secondary">
+                <a href="/deletepage/{{ r.id }}" class="text-danger">Delete</a>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col">
+        <p>No recipes found.</p>
+      </div>
+      {% endif %}
+    </div>
+  </form>
+</div>
+
+{% endblock %}

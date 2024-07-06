@@ -1,0 +1,104 @@
+{% extends 'base.html' %}{% load static %}{%block title%} Home
+{%endblock%}{%block content%}
+
+<!-- HERO -->
+<section id="hero">
+  <div class="px-4 pt-5 my-5 text-center border-bottom p-0 mt-3">
+    <div class="overflow-hidden" style="max-height: 30vh">
+      <div class="container px-5">
+        <img
+          src="{% static 'assets/img/hero.jpg' %}"
+          class="img-fluid border rounded-3 shadow-lg mb-5"
+          alt="Example image"
+          width="700"
+          height="500"
+          loading="lazy"
+        />
+      </div>
+    </div>
+    <h1 class="display-4 fw-bold text-body-emphasis">SavoryScript</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">
+        Unleash your inner chef with our vast collection of mouth-watering
+        recipes. Whether you're a seasoned cook or a kitchen newbie, find
+        step-by-step guides, expert tips, and creative ideas to make every meal
+        a memorable one. Explore, cook, and savor the joy of homemade dishes
+        today!
+      </p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+        <form action="{% url 'recipe_search' %}" method="post">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="search"
+            style="padding: 0.5rem 5rem; border-radius: 1rem"
+          />
+          <button
+            type="submit"
+            value="search"
+            class="btn btn-warning btn-lg px-4 me-sm-3"
+          >
+            Search Recipe
+          </button>
+        </form>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-lg px-4 dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Category
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item {% if not current_category %}active{% endif %}"
+                href="{% url 'home' %}"
+                >All</a
+              >
+            </li>
+            {% for category in recipeSort %}
+            <li>
+              <a
+                class="dropdown-item {% if category == current_category %}active{% endif %}"
+                href="{% url 'category' category %}"
+              >
+                {{ category }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARD -->
+<section id="card" class="container">
+  <div class="row">
+    {% for recipe in recipes %}
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-3 d-flex align-items-stretch">
+      <div class="card" style="width: 18rem">
+        <img
+          src="{{ recipe.recipe_img.url }}"
+          class="card-img-top"
+          alt="recipe-img"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+          <p class="card-text">{{ recipe.description }}</p>
+          <a href="/viewpage/{{ recipe.id }}" class="btn btn-warning mt-auto"
+            >View</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{%endblock%} {% block css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %}
